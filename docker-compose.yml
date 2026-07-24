@@ -1,7 +1,7 @@
 services:
   price-predictor:
     build:
-      context: ./ClothingStore.PricePredictor
+      context: ./ClothingStore.ML
       dockerfile: Dockerfile
     container_name: clothing-store-price-predictor
     ports:
