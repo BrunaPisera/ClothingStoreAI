@@ -1,0 +1,46 @@
+services:
+  price-predictor:
+    build:
+      context: ./ClothingStore.PricePredictor
+      dockerfile: Dockerfile
+    container_name: clothing-store-price-predictor
+    ports:
+      - "8000:8000"
+    networks:
+      - clothing-network
+
+  api:
+    build: 
+      context: ./ClothingStore.Backend
+      dockerfile: Dockerfile
+    container_name: clothing-store-api
+    ports:
+      - "5000:8080"
+    environment:
+      # API_KEY: ${API_KEY}
+      ASPNETCORE_ENVIRONMENT: Production
+      PRICE_PREDICTOR_URL: http://price-predictor:8000
+    depends_on:
+      - price-predictor
+    networks:
+      - clothing-network
+
+  frontend:
+    build:
+      context: ./ClothingStore.UI
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://api:8080
+    container_name: clothing-store-frontend
+    ports:
+      - "5173:80"
+    environment:
+      VITE_API_URL: http://api:8080
+    depends_on:
+      - api
+    networks:
+      - clothing-network
+
+networks:
+  clothing-network:
+    driver: bridge
