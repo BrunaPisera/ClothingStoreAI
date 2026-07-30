@@ -25,8 +25,8 @@ MODEL_PATH = "price_model.joblib"
 
 def main():
     # algorithm_name = "random_forest" 
-    # algorithm_name = "decision_tree" 
-    algorithm_name = "cat_boost" 
+    algorithm_name = "decision_tree" 
+    # algorithm_name = "cat_boost" 
     # algorithm_name = "linear_regression" 
 
     # Load the dataset

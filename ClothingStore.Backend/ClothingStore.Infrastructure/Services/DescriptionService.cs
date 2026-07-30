@@ -24,7 +24,7 @@ namespace ClothingStoreAI.Infrastructure.Services
 
             var messages = new List<ChatMessage>
             {
-                new SystemChatMessage(DescriptionPrompt.Prompt),
+                new SystemChatMessage(DescriptionPromptPtBr.Prompt),
                 new UserChatMessage(attributes)
             };
 
