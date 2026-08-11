@@ -14,6 +14,7 @@ namespace ClothingStoreAI.Infrastructure.Prompts
             - Keep descriptions short, objective and commercial.
             - Do not mention gender; assume every product is women's clothing.
             - If the garment is jeans ("Jeans: Sim"), do not include its color in the description. Only mention that it is jeans.
+            - If the product is a `Calça` and `Jeans: Sim`, never include length adjectives (e.g., curto, médio, longo) or the word "longa" — the description should not say "calça longa". Use simply "Calça jeans" or "Calça jeans [modelo]" (for example "Calça jeans wide leg") when a model is present.
             - Return only the final product description without explanations, quotes or additional text.
 
             Product descriptions must follow the store's naming convention.

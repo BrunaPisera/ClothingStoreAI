@@ -19,7 +19,7 @@ PRICE_POINTS = {
         "calça jeans mom",
         "calça jeans aladin",
     ): [(15,45),(20,45),(25,45),(30,50),(35,50),(40,50),(45,50)],
-
+    
     (
         "blusa",
         "t-shirt",
@@ -139,6 +139,9 @@ WEIGHTS = {
     (
         "calça jeans",
         "calça jeans wide leg",
+    ): 10,
+
+    (
         "calça jeans skinny",
         "calça jeans mom",
         "calça jeans aladin",
@@ -264,9 +267,11 @@ def exception_price(cost):
 # based on predefined business rules.
 def generate(rows=120000):
 
-    # Get all category groups and their selection weights
+    # Get all category groups and their selection weights.
+    # WEIGHTS may use different tuple groupings than PRICE_POINTS (split across keys),
+    # so use a sample category from each PRICE_POINTS group and lookup its weight.
     groups = list(PRICE_POINTS.keys())
-    weights = [WEIGHTS[group] for group in groups]
+    weights = [get_group_value(WEIGHTS, group[0]) for group in groups]
 
     data = []
 
@@ -302,6 +307,12 @@ def generate(rows=120000):
         # Increase the price for premium items when applicable
         if premium == "yes" and price < 50 and cost <= normal_max_cost:
             price = min(50, price + random.randint(3, 5))
+
+        # Clamp price to maximum allowed (50) and enforce jeans minimum
+        price = int(min(50, price))
+        # Ensure jeans are never priced below 45
+        if "jeans" in category.lower():
+            price = max(price, 45)
 
         # Ensure the selling price is never below the cost price
         if price < cost:
